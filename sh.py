@@ -160,17 +160,19 @@ def get_rc_exc(rc):
 
 
 def which(program):
-    def is_exe(fpath):
+    def is_executable(fpath):
         return os.path.exists(fpath) and os.access(fpath, os.X_OK)
 
     fpath, fname = os.path.split(program)
     if fpath:
-        if is_exe(program): return program
+        if is_executable(program):
+            return program
     else:
-        if "PATH" not in os.environ: return None
+        if "PATH" not in os.environ:
+            return None
         for path in os.environ["PATH"].split(os.pathsep):
             exe_file = os.path.join(path, program)
-            if is_exe(exe_file):
+            if is_executable(exe_file):
                 return exe_file
 
     return None
